@@ -21,7 +21,10 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h2 id="infotitle">Choose your move</h2>
-                                          
+                
+                <h3>
+                    <span id="score1" class="badge bg-primary">0</span> - <span id="score2" class="badge bg-primary">0</span>
+                </h3>                               
             </div>
         </div>
         <div class="row">
@@ -36,7 +39,11 @@
         const rock = document.getElementById('rock');
         const paper = document.getElementById('paper');
         const scissors = document.getElementById('scissors');
+        const score1 = document.getElementById('score1');
+        const score2 = document.getElementById('score2');
         const infotitle = document.getElementById('infotitle');
+        let playerScore = 0;
+        let aiScore = 0;
         let playerMove = '';
         let computerMove = '';
         let moves = ['rock', 'paper', 'scissors'];
@@ -62,13 +69,15 @@
                 playerMove === 'paper' && computerMove === 'rock' ||
                 playerMove === 'scissors' && computerMove === 'paper') {
                 infotitle.innerHTML = 'You win';
-        
+                playerScore++;
             } else {
                 infotitle.innerHTML = 'You lose';
-           
+                aiScore++;
             }
+            score1.innerHTML = playerScore;
+            score2.innerHTML = aiScore;
         }
-
+        
         
 
         </script>
