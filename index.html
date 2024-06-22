@@ -17,14 +17,21 @@
             <div class="col-12 text-center">
                 <h1>Rock Paper Scissors</h1>
             </div>
+            <div class="text-center" id="playAiDiv">
+                <input class="form-check-input" type="checkbox" checked="true" id="useAI">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Play with AI
+                </label>
+            </div>
         </div>
         <div class="row">
             <div class="col-12 text-center">
                 <h2 id="infotitle">Choose your move</h2>
-                
+
                 <h3>
-                    <span id="score1" class="badge bg-primary">0</span> - <span id="score2" class="badge bg-primary">0</span>
-                </h3>                               
+                    <span id="score1" class="badge bg-primary">0</span> - <span id="score2"
+                        class="badge bg-primary">0</span>
+                </h3>
             </div>
         </div>
         <div class="row">
@@ -42,45 +49,110 @@
         const score1 = document.getElementById('score1');
         const score2 = document.getElementById('score2');
         const infotitle = document.getElementById('infotitle');
-        let playerScore = 0;
-        let aiScore = 0;
-        let playerMove = '';
-        let computerMove = '';
+        const useAI = document.getElementById('useAI');
+        let player1Score = 0;
+        let player2Score = 0;
+        let player1Move = '';
+        let player2Move = '';
         let moves = ['rock', 'paper', 'scissors'];
         rock.addEventListener('click', () => {
-            playerMove = 'rock';
-            computerMove = moves[Math.floor(Math.random() * moves.length)];
-            checkWinner();
+            if (player1Move == "") {
+                player1Move = 'rock';
+                if (useAI.checked) {
+                    player2Move = moves[Math.floor(Math.random() * moves.length)];
+                    checkWinner();
+                } else {
+                    infotitle.innerHTML = "Player 2 turn"
+                }
+
+            } else {
+                player2Move = 'rock';
+                checkWinner();
+            }
+
         });
         paper.addEventListener('click', () => {
-            playerMove = 'paper';
-            computerMove = moves[Math.floor(Math.random() * moves.length)];
-            checkWinner();
+            if (player1Move == "") {
+                player1Move = 'paper';
+                if (useAI.checked) {
+                    player2Move = moves[Math.floor(Math.random() * moves.length)];
+                    checkWinner();
+                } else {
+                    infotitle.innerHTML = "Player 2 turn"
+                }
+
+            } else {
+                player2Move = 'paper';
+                checkWinner();
+            }
         });
         scissors.addEventListener('click', () => {
-            playerMove = 'scissors';
-            computerMove = moves[Math.floor(Math.random() * moves.length)];
-            checkWinner();
+            if (player1Move == "") {
+                player1Move = 'scissors';
+                if (useAI.checked) {
+                    player2Move = moves[Math.floor(Math.random() * moves.length)];
+                    checkWinner();
+                } else {
+                    infotitle.innerHTML = "Player 2 turn"
+                }
+
+            } else {
+                player2Move = 'scissors';
+                checkWinner();
+            }
         });
         function checkWinner() {
-            if (playerMove === computerMove) {
+            if (player1Move === player2Move) {
                 infotitle.innerHTML = 'It\'s a tie';
-            } else if (playerMove === 'rock' && computerMove === 'scissors' ||
-                playerMove === 'paper' && computerMove === 'rock' ||
-                playerMove === 'scissors' && computerMove === 'paper') {
-                infotitle.innerHTML = 'You win';
-                playerScore++;
+                paper.disabled = true;
+                rock.disabled = true;
+                scissors.disabled = true;
+                setTimeout(() => {
+                    paper.disabled = false;
+                    rock.disabled = false;
+                    scissors.disabled = false;
+                    player1Move = '';
+                    player2Move = '';
+                    infotitle.innerHTML = 'Player1 your move';
+                }, 1000)
+            } else if (player1Move === 'rock' && player2Move === 'scissors' ||
+                player1Move === 'paper' && player2Move === 'rock' ||
+                player1Move === 'scissors' && player2Move === 'paper') {
+                infotitle.innerHTML = 'Player 1 wins';
+                player1Score++;
+                paper.disabled = true;
+                rock.disabled = true;
+                scissors.disabled = true;
+                setTimeout(() => {
+                    paper.disabled = false;
+                    rock.disabled = false;
+                    scissors.disabled = false;
+                    player1Move = '';
+                    player2Move = '';
+                    infotitle.innerHTML = 'Player1 your move';
+                }, 1000)
             } else {
-                infotitle.innerHTML = 'You lose';
-                aiScore++;
+                infotitle.innerHTML = 'Player 2 wins';
+                player2Score++;
+                paper.disabled = true;
+                rock.disabled = true;
+                scissors.disabled = true;
+                setTimeout(() => {
+                    paper.disabled = false;
+                    rock.disabled = false;
+                    scissors.disabled = false;
+                    player1Move = '';
+                    player2Move = '';
+                    infotitle.innerHTML = 'Player1 your move';
+                }, 1000)
             }
-            score1.innerHTML = playerScore;
-            score2.innerHTML = aiScore;
+            score1.innerHTML = player1Score;
+            score2.innerHTML = player2Score;
         }
-        
-        
 
-        </script>
+
+
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
